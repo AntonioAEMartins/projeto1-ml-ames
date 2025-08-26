@@ -1,29 +1,40 @@
-# Análise Exploratória - AMES Dataset
-## Grupo: Antônio Martins e Rodrigo Anciães
+### Ames Housing — Sale Price Prediction (EDA + FastAPI)
 
-### Sobre o Projeto
+Authors: Antônio Martins and Rodrigo Anciães
 
-Foram utilizados como base para coleta e análise de dados os arquivos disponibilizados na disciplina de Machine Learning ministrada pelo professor Fábio Ayres. Entre os arquivos estão:
+### Goal
 
-1. 01_reading_raw_data
-2. 02_analysis_and_preprocessing
-3. 03_linear_regression_modeling
+Predict residential sale prices (target: `SalePrice`) using the Ames Housing dataset (2930 observations, 82 variables). The notebooks cover data loading, EDA, preprocessing/feature engineering, and regression modeling aimed at minimizing prediction error.
 
-Mesmo que o terceiro arquivo não tenha sido utilizado, ele está presente neste projeto, pois serviu de base no momento da criação de pipelines e na aplicação de boas práticas de programação.
+### Project Structure
 
-Os arquivos criados para este projeto foram:
+```
+projeto1-ml-ames/
+  docs/
+    DataDocumentation.txt        # Official Ames dataset documentation
+  notebooks/
+    01_reading_raw_data.ipynb    # Data loading and basic exploration
+    02_analysis_and_preprocessing.ipynb
+    03_linear_regression_modeling.ipynb
+    projeto1-feature-eng.ipynb   # Deep dive + feature simplification
+    projeto1.ipynb               # End-to-end modeling experiments
+    fast_deploy.py               # FastAPI app for serving predictions
+  environment.yml                # Reproducible conda environment
+  README.md
+```
 
-1. Projeto1-feature-eng
+### Deployment (FastAPI)
 
-Neste arquivo, há uma análise de dados aprofundada, com simplificação de características (features).
-
-2. Projeto1
-
-Este arquivo utiliza todos os dados e segue a apresentação no mesmo estilo do arquivo disponibilizado em sala de aula. Nesta etapa, foram testadas múltiplas regressões e diversas técnicas com o objetivo de reduzir ao máximo o erro de predição.
-
-3. Fast_Deploy
-
-Este arquivo trata da construção do deploy realizado com FastAPI, e foi feito por meio da criação de um espaço (Space) no site HuggingFace.
-
-Link do Space: [https://huggingface.co/spaces/antonioaem/machine-learning-insper-projeto1](https://huggingface.co/spaces/antonioaem/machine-learning-insper-projeto1)
-Link Embutido: [https://antonioaem-machine-learning-insper-projeto1.hf.space/](https://antonioaem-machine-learning-insper-projeto1.hf.space/)
+- App: `notebooks/fast_deploy.py` (loads `stack_reg.pkl`)
+- Endpoints: `GET /` (health/info), `POST /predict` (predict sale price)
+- Requirements (add to the conda env):
+  ```bash
+  pip install fastapi uvicorn
+  ```
+- Start from repository root (model file placed alongside the app):
+  ```bash
+  uvicorn fast_deploy:app --reload --host 0.0.0.0 --port 8000 --app-dir notebooks
+  ```
+- Deployed demo (Hugging Face Space):
+  - Space page: [https://huggingface.co/spaces/antonioaem/machine-learning-insper-projeto1](https://huggingface.co/spaces/antonioaem/machine-learning-insper-projeto1)
+  - Live app: [https://antonioaem-machine-learning-insper-projeto1.hf.space/](https://antonioaem-machine-learning-insper-projeto1.hf.space/)
